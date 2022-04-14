@@ -2,6 +2,8 @@ package com.example.student.rest;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,8 @@ import com.example.student.service.StudentService;
 
 @RestController
 public class StudentRest {
+	
+	Logger logger = LoggerFactory.getLogger(StudentRest.class);
 
 	@Autowired
 	StudentService studentService;
@@ -28,8 +32,9 @@ public class StudentRest {
 		List<Student> allStudents = null;
 		try {
 			allStudents = studentService.getAllStudents();
+			logger.info("getAllStudents Data :{}", allStudents);
 		} catch (Exception e) {
-			System.out.print("Error while getting data from getAllStudents" + e.getStackTrace());
+			logger.info("Error while getting data from getAllStudents :{}",e.getStackTrace());
 		}
 		return allStudents;
 	}
@@ -40,7 +45,7 @@ public class StudentRest {
 		try {
 			studentsByName = studentService.getStudentsByName(name);
 		} catch (Exception e) {
-			System.out.print("Error while getting data from getAllStudents" + e.getStackTrace());
+			logger.info("Error while getting data from getAllStudents :{}", e.getStackTrace());
 		}
 		return studentsByName;
 	}
@@ -50,7 +55,7 @@ public class StudentRest {
 		try {
 			studentService.create(students);
 		} catch (Exception e) {
-			System.out.print("Error while getting data from create" + e.getStackTrace());
+			logger.info("Error while getting data from create :{}" , e.getStackTrace());
 		}
 	}
 
@@ -59,7 +64,7 @@ public class StudentRest {
 		try {
 			studentService.updatePercentage(rollno, percentage);
 		} catch (Exception e) {
-			System.out.print("Error while getting data from updatePercentage" + e.getStackTrace());
+			logger.info("Error while getting data from updatePercentage :{}",  e.getStackTrace());
 		}
 	}
 
@@ -69,7 +74,7 @@ public class StudentRest {
 		try {
 			studentsByPercentage = studentService.getStudentsByPercentage(percentage);
 		} catch (Exception e) {
-			System.out.print("Error while getting data from updatePercentage" + e.getStackTrace());
+			logger.info("Error while getting data from updatePercentage :{}", e.getStackTrace());
 		}
 		return studentsByPercentage;
 	}
